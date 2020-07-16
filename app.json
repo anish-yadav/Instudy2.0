@@ -22,7 +22,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anish.instudy"
+    },
+    "android": {
+      "package": "com.anish.instudy"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
