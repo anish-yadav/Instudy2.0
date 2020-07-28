@@ -2,10 +2,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-import { classRequired } from '../../helpers/attendance'
+
+import { classRequired } from '../../../helpers/attendance'
 // const { Swipeable } = GestureHandler
 
-export default function Attendance({ item, navigation }) {
+export default function AttendanceItem({ item, navigation }) {
     const { subject, subCode, percentage } = item
     const { attendance } = useSelector(state => ({
         ...state.authReducer
@@ -18,7 +19,7 @@ export default function Attendance({ item, navigation }) {
         leavesLeft = Math.abs(reqClass)
     return (
         <TouchableOpacity style={[styles.container,{backgroundColor:percentage<minAttendance ? '#f7d5d5':'#ccebe1'}]} 
-        onPress={() => navigation.navigate('attendance_detail',{
+        onPress={() => navigation.navigate('Attendance_Detail',{
             subCode,
             subject,
             percentage
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: "#ccebe1",
         paddingHorizontal: 20,
+        marginHorizontal: 10,
         paddingVertical: 10,
         marginVertical: 5,
         borderRadius: 5,

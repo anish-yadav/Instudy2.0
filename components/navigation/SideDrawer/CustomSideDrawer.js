@@ -35,7 +35,10 @@ export default function CustomSideDrawer(props) {
             <Text style={[styles.text,active == 'attendance'?styles.activeColor:styles.nothing]}>Attendance</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.itemContainer,active == 'message'?styles.activeContainer:styles.nothing]}>
+          <TouchableOpacity 
+          style={[styles.itemContainer,active == 'message'?styles.activeContainer:styles.nothing]} 
+          onPress={() => navigation.navigate('message')}
+          >
             <Feather name='message-square' style={[styles.icon,active == 'message'?styles.activeColor:styles.nothing]} />
             <Text style={[styles.text,active == 'message'?styles.activeColor:styles.nothing]}>Messages</Text>
           </TouchableOpacity>

@@ -78,20 +78,21 @@ export const CategoryCard = ({ name }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 150
+    width: 130
   },
   secondaryText: {
     color: '#ccc',
     fontSize: 12
   },
   primaryText: {
-    color: '#222222',
+    color: '#FFF',
     fontSize: 14,
-    textTransform:'capitalize'
+    textTransform:'capitalize',
+    fontFamily: 'SFProText-Semibold'
   },
   thumbImg: {
-    height: 200,
-    width: 130,
+    height: 150,
+    width: 100,
     borderRadius: 10
   },
   thumbContainer:{
