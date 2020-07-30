@@ -95,7 +95,7 @@ export const VideoProvider = ({ children }) => {
                     {children}
                 </View>
                 <Animated.View style={[styles.container,{ transform: [{ translateY }]}]}>
-                    {video && <VideoModal {...{ video }} />}
+                    {video && <VideoModal {...{ video,setVideo }} />}
                 </Animated.View>
             </View>
         </VideoContext.Provider>

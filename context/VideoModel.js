@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, StyleSheet, Dimensions, Image, Text, ScrollView } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, StyleSheet, Dimensions, Image, Text, ScrollView, BackHandler } from 'react-native'
 import Animated, { Easing } from 'react-native-reanimated'
 import Video from 'react-native-video'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
@@ -54,13 +54,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     }
 })
-export const VideoModal = ({ video }) => {
+export const VideoModal = ({ video, setVideo }) => {
     const AVideo = Animated.createAnimatedComponent(Video)
     const translationY = new Animated.Value(0)
     const velocityY = new Animated.Value(0)
     const state = new Animated.Value(State.UNDETERMINED)
 
-    
+
     const onGestureEvent = Animated.event([
         {
             nativeEvent: {
@@ -72,6 +72,18 @@ export const VideoModal = ({ video }) => {
     ], {
         useNativeDriver: true,
     })
+    const handlebackPress = () => {
+        setVideo(null)
+        return true
+    }
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress',handlebackPress())
+
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handlebackPress())
+        }
+    },[])
     return (
         <>
             <Animated.View style={[styles.container, { backgroundColor: '#fff', transform: [{ translateY: translationY}] }]}>
