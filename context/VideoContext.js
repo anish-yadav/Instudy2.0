@@ -33,12 +33,12 @@ const videos = [
         thumb: require('../assets/img/pattern/pattern1.png')
     }
 ]
-const { width, height} = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    video:{
+    video: {
         width,
         height: 250
     },
@@ -49,42 +49,56 @@ const styles = StyleSheet.create({
     },
     thumb: {
         height: 100,
-        width: width/3
+        width: width / 3
     },
-    name:{
+    name: {
         fontSize: 16,
         fontFamily: 'SFProText-Semibold',
         paddingHorizontal: 10
     }
 })
+
+
 export const VideoContext = createContext(INITIAL_STATE)
 
 export const VideoProvider = ({ children }) => {
     const [video, setVideo] = useState(null)
     const animation = new Animated.Value(0)
 
-    const toggleVideo = () => Animated.timing(animation,{
+    const toggleVideo = () => Animated.timing(animation, {
         toValue: 1,
+        duration: 300,
+        easing: Easing.inOut(Easing.ease)
+    }).start()
+
+    const toggleVideoDown = () => Animated.timing(animation, {
+        toValue: 0,
         duration: 300,
         easing: Easing.inOut(Easing.ease)
     }).start()
 
     const playVideo = (v) => {
         console.log('firing')
+        setVideo(null)
         setVideo(v)
-        
-        
+
+
     }
     useEffect(() => {
         console.log('starting to toggle')
-        toggleVideo()
-    },[video])
+        if (video != null)
+            toggleVideo()
+        else {
+            console.log('toggling down') // Not working but
+            toggleVideoDown()
+        }
+    }, [video])
     const translateY = animation.interpolate({
-            inputRange: [0,1],
-            outputRange:[height,0]
-        })
-    
-    
+        inputRange: [0, 1],
+        outputRange: [height, 0]
+    })
+
+
     return (
         <VideoContext.Provider value={{
             video,
@@ -94,8 +108,8 @@ export const VideoProvider = ({ children }) => {
                 <View style={StyleSheet.absoluteFill}>
                     {children}
                 </View>
-                <Animated.View style={[styles.container,{ transform: [{ translateY }]}]}>
-                    {video && <VideoModal {...{ video,setVideo }} />}
+                <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
+                    {video && <VideoModal {...{ video, setVideo }} />}
                 </Animated.View>
             </View>
         </VideoContext.Provider>
@@ -106,7 +120,7 @@ export const VideoProvider = ({ children }) => {
 //     return(
 //         <View style={[styles.container,{ backgroundColor: '#fff'}]}>
 //             <Video source={video} style={styles.video} controls={true}/>
-            
+
 //             <ScrollView>
 //                 {
 //                     videos.map(({ thumb, title, video}, i) => {
