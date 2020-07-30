@@ -5,6 +5,7 @@ import TabBar from '../navigation/TabBar/TabBar'
 import { View, Text } from 'react-native'
 import AttendanceStack from './Attendance'
 import ResourceStack from './Resource'
+import VideoStack from './Video'
 
 
 const TabStack = createBottomTabNavigator()
@@ -15,6 +16,7 @@ const Main = () => {
             <TabStack.Navigator tabBar={props => <TabBar {...props} />}  >
                 <TabStack.Screen name='Attendance' component={AttendanceStack} />
                 <TabStack.Screen name='Resource' component={ResourceStack} />
+                <TabStack.Screen name='Video' component={VideoStack} />
             </TabStack.Navigator>
         </NavigationContainer>
     )

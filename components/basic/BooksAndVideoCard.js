@@ -13,13 +13,14 @@ export default function BooksAndVideoCard() {
   )
 }
 
-export const BookThumbWithDetail = ({ navigation, name, author, thumb, url, subCode,semesters }) => {
+export const BookThumbWithDetail = ({ navigation, name, author, thumb, url, subCode,semesters, data, variant }) => {
+  const color = variant && variant == 'light'?'#1E152A':'#fff'
   return (
-    <TouchableOpacity onPress={()=> navigation.navigate('detail',{thumb:thumb,name:name,author:author,url:url,subCode, semesters})}>
+    <TouchableOpacity onPress={()=> navigation.navigate('Resource_Detail',{thumb,name,author,url,subCode, semesters, data})}>
       <View style={styles.container}>
         <Image style={styles.thumbImg} source={{ uri: thumb }} />
         <Text style={styles.secondaryText}>{author}</Text>
-        <Text style={styles.primaryText}>{name}</Text>
+        <Text style={[styles.primaryText,{ color }]}>{name}</Text>
       </View>
     </TouchableOpacity>
   )
@@ -57,11 +58,11 @@ export const VideoListItem = ({ name, subCode, subject, handlePress, active, ind
     
   )
 }
-export const BookThumb = ({ navigation, name, author, thumb, url, subCode,semesters }) => {
+export const BookThumb = ({ navigation, name, author, thumb, url, subCode,semesters, data }) => {
   return (
-    <TouchableOpacity onPress={()=> navigation.navigate('detail',{thumb:thumb,name:name,author:author,url:url,subCode, semesters})}>
+    <TouchableOpacity onPress={()=> navigation.navigate('Resource_Detail',{thumb:thumb,name:name,author:author,url:url,subCode, semesters, data})}>
       <View style={[styles.container,styles.thumbContainer]}>
-        <Image style={[styles.thumbImg,{ width: 100, height: 150}]} source={{ uri: thumb }}/>
+        <Image style={[styles.thumbImg]} source={{ uri: thumb }}/>
       </View>
     </TouchableOpacity>
   )
@@ -78,7 +79,8 @@ export const CategoryCard = ({ name }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 130
+    width: 120,
+    marginHorizontal: 10
   },
   secondaryText: {
     color: '#ccc',
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
   },
   thumbContainer:{
     marginVertical:5,
-    width:120
+    width:width/3 - 30
   },
   categoryCard: {
     width: 150,

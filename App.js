@@ -35,13 +35,14 @@ import { store, persistor } from './store/store'
 import { Authentication, Main } from './components'
 import { useFonts } from '@expo-google-fonts/dev'
 import { HttpLink, InMemoryCache } from 'apollo-boost';
+import { VideoProvider } from './context/VideoContext';
 const TabStack = createBottomTabNavigator()
 const Stack = createStackNavigator()
 const DrawerStack = createDrawerNavigator()
 
 
 const client = new ApolloClient({
-  uri: 'https://9f11e5468564.ngrok.io/graphql',
+  uri: 'http://192.168.42.172:4000/graphql',
   cache: new InMemoryCache(),
 })
 // const ResourceStack = () => {
@@ -201,19 +202,21 @@ const HomeStackScreen = () => {
 
 export default function App() {
   const [loaded] = useFonts({
-    'SFProText-Bold' : require('./assets/fonts/SF-Pro-Text-Bold.otf'),
-    'SFProText-Semibold' : require('./assets/fonts/SF-Pro-Text-Semibold.otf'),
-    'SFProText-Regular' : require('./assets/fonts/SF-Pro-Text-Regular.otf')
+    'SFProText-Bold': require('./assets/fonts/SF-Pro-Text-Bold.otf'),
+    'SFProText-Semibold': require('./assets/fonts/SF-Pro-Text-Semibold.otf'),
+    'SFProText-Regular': require('./assets/fonts/SF-Pro-Text-Regular.otf')
   })
 
-  if(!loaded)
+  if (!loaded)
     return <View><Text>Loading</Text></View>
-  
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor} >
         <ApolloProvider client={client}>
-          <HomeStackScreen />
+          <VideoProvider>
+            <HomeStackScreen />
+          </VideoProvider>
         </ApolloProvider>
       </PersistGate>
     </Provider>

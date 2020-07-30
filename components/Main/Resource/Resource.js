@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Image, Dimensions, FlatList } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import { TextStyle, BookThumbWithDetail } from '../../basic'
-import { TextInput, ScrollView } from 'react-native-gesture-handler'
+import { TextInput, ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { useQuery } from '@apollo/client'
 import { BOOKS_QUERY } from '../../../helpers/query'
 import Animation from 'lottie-react-native'
@@ -120,17 +120,22 @@ const Resource = ({ route, navigation }) => {
         inputRange: [0, 1, 2, 3, 5, 6, 7, 8].map((i) => i * 50),
         outputRange: [0, 1, 2, 3, 5, 6, 7, 8].map((i) => ((10 - i) / 10) * 1)
     })
-    console.log('y is', y)
+   
     useEffect(() => {
         if (data && data.books)
             setBooks(data.books)
     }, [data])
+    if(error){
+        console.log(error)
+    }
     return (
         <View style={styles.container}>
             <Image style={styles.backgorundImage} source={require('../../../assets/img/pattern/pattern3.png')} />
             {/* header */}
             <View style={styles.header}>
+                <TouchableWithoutFeedback onPress={() => navigation.openDrawer()}>
                 <Feather name='align-center' size={24} style={[TextStyle.heading, { color: 'white' }]} color='white' />
+                </TouchableWithoutFeedback>
             </View>
             <Animated.View style={[styles.topFixed, { ...StyleSheet.absoluteFillObject, zIndex, opacity }]}>
 
@@ -193,7 +198,7 @@ const PopularContainer = ({ books, navigation }) => {
                 style={styles.flatlist}
                 horizontal
                 renderItem={({ item }) => (
-                    <BookThumbWithDetail key={item.name} {...item} navigation={navigation} />
+                    <BookThumbWithDetail key={item.name} {...item} navigation={navigation} data={books} />
                 )}
                 ListEmptyComponent={() => (
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>

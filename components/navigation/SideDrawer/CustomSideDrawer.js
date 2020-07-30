@@ -21,34 +21,29 @@ export default function CustomSideDrawer(props) {
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.profileContainer}>
-        <Image style={styles.profileImage} source={require('../../../assets/avatar/male1.png')} />
-        <Text style={styles.name}>{name || 'Anish Kumar Yadav'}</Text>
+        <Image style={styles.logo} source={require('../../../assets/icon.png')} />
+        
       </View>
       <View style={styles.container}>
 
         {/* main navigations */}
       <View style={styles.navigationContainer}>
-          <TouchableOpacity 
-          style={[styles.itemContainer,active == 'attendance'?styles.activeContainer:styles.nothing]} 
-          onPress={()=> navigation.navigate('home',{screen: 'attendance'})}>
-            <Feather name='user' style={[styles.icon,active == 'attendance'?styles.activeColor:styles.nothing]} />
-            <Text style={[styles.text,active == 'attendance'?styles.activeColor:styles.nothing]}>Attendance</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-          style={[styles.itemContainer,active == 'message'?styles.activeContainer:styles.nothing]} 
-          onPress={() => navigation.navigate('message')}
-          >
-            <Feather name='message-square' style={[styles.icon,active == 'message'?styles.activeColor:styles.nothing]} />
-            <Text style={[styles.text,active == 'message'?styles.activeColor:styles.nothing]}>Messages</Text>
-          </TouchableOpacity>
+          
 
 
-          <TouchableOpacity style={[styles.itemContainer,active == 'all_books'?styles.activeContainer:styles.nothing]} onPress={() => navigation.navigate('resource',{ screen: 'all_books'})}>
+          <TouchableOpacity style={[styles.itemContainer,active == 'all_books'?styles.activeContainer:styles.nothing]} onPress={() => navigation.navigate('Books')}>
             <Feather name='book' style={[styles.icon,active == 'all_books'?styles.activeColor:styles.nothing]} />
             <Text style={[styles.text,active == 'all_books'?styles.activeColor:styles.nothing]}>Books</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity style={[styles.itemContainer,active == 'all_books'?styles.activeContainer:styles.nothing]} onPress={() => navigation.navigate('resource',{ screen: 'all_books'})}>
+            <Feather name='book' style={[styles.icon,active == 'all_books'?styles.activeColor:styles.nothing]} />
+            <Text style={[styles.text,active == 'all_books'?styles.activeColor:styles.nothing]}>Notes</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.itemContainer,active == 'all_books'?styles.activeContainer:styles.nothing]} onPress={() => navigation.navigate('resource',{ screen: 'all_books'})}>
+            <Feather name='book' style={[styles.icon,active == 'all_books'?styles.activeColor:styles.nothing]} />
+            <Text style={[styles.text,active == 'all_books'?styles.activeColor:styles.nothing]}>Question Papers</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity style={[styles.itemContainer,active == 'videos'?styles.activeContainer:styles.nothing]} onPress={() => navigation.navigate('home',{ screen: 'videos'})}>
             <Feather name='video' style={[styles.icon,active == 'videos'?styles.activeColor:styles.nothing]} />
@@ -60,10 +55,6 @@ export default function CustomSideDrawer(props) {
             <Text style={[styles.text,active == 'favourite'?styles.activeColor:styles.nothing]}>Favourite</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.itemContainer} onPress={() => dispatch(logout())}>
-            <Feather name='log-out' style={styles.icon} />
-            <Text style={styles.text}>Sign Out</Text>
-          </TouchableOpacity>
       </View>
 
 
@@ -89,10 +80,10 @@ const styles = StyleSheet.create({
     paddingTop:20,
     paddingBottom:20,
     justifyContent:'space-between',
-    height : height-210
+    height : height-70-150
   },
   profileContainer:{
-    height: 200,
+    height: 150,
     justifyContent:'flex-end',
     paddingHorizontal:30
   }, 
@@ -110,16 +101,14 @@ const styles = StyleSheet.create({
     backgroundColor:'#ccebe1',
     borderRadius:5
   },
-  profileImage: {
-    width: 100,
+  logo: {
+    width: 120,
     height: 100,
-    borderRadius: 50
   },
   name:{
-    fontSize:18,
-    fontWeight:'600',
-    marginTop:20,
-    textTransform:'capitalize'
+    fontSize:24,
+    textTransform:'capitalize',
+    fontFamily: 'SFProText-Regular'
   },
   text:{
     marginLeft:20,

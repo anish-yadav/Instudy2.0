@@ -8,7 +8,7 @@ const height = 64
 const tabWidth = width/5
 const tabs = [
   { name: 'book-open' ,screen: 'Resource' },
-  { name: 'video' ,screen: 'Attendance' },
+  { name: 'video' ,screen: 'Video' },
   { name: 'home' ,screen: 'Attendance' },
   { name: 'message-circle' ,screen: 'Attendance' },
   { name: 'user' ,screen: 'Attendance' }

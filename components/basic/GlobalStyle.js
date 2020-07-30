@@ -6,7 +6,7 @@ export const TextStyle = StyleSheet.create({
     heading: {
         fontSize: 22,
         fontFamily: 'SFProText-Semibold',
-        color: '#1E152A'
+        color: '#1E152A',
     },
     description:{
         color: 'rgba(30,21,42,0.7)',
