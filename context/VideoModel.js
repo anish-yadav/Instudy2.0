@@ -54,7 +54,9 @@ const videos = [
     }
 ]
 const { width, height } = Dimensions.get('window')
-const upperBound = height - 3 * 64 + 64
+const minHeight = 64;
+const midBound = height - 64 * 3 - 64;
+const upperBound = midBound + minHeight ;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -86,7 +88,7 @@ function runSpring(clock, value, dest) {
         velocity: new Value(0),
         position: new Value(0),
         time: new Value(0),
-    };
+    }
 
     const config = {
         damping: 20,
@@ -96,7 +98,7 @@ function runSpring(clock, value, dest) {
         restSpeedThreshold: 1,
         restDisplacementThreshold: 0.5,
         toValue: new Value(0),
-    };
+    }
 
     return [
         cond(clockRunning(clock), 0, [
@@ -139,7 +141,7 @@ export const VideoModal = ({ video, setVideo }) => {
         return true
     }
 
-    
+
 
 
 
@@ -163,13 +165,37 @@ export const VideoModal = ({ video, setVideo }) => {
             add(offsetY, translationY)
         ]
     );
-    
-        const opacity = interpolate(translateY,{
-            inputRange:[0,upperBound-200],
-            outputRange: [1,0],
-            extrapolate: Extrapolate.CLAMP
-        })
 
+    const opacity = interpolate(translateY, {
+        inputRange: [0, upperBound - 200],
+        outputRange: [1, 0],
+        extrapolate: Extrapolate.CLAMP
+    })
+    const videoWidth = interpolate(translateY, {
+        inputRange: [0, midBound, upperBound],
+        outputRange: [width, width, 64 * 2],
+        extrapolate: Extrapolate.CLAMP
+    })
+    const videoHeight = interpolate(translateY, {
+        inputRange: [0, midBound, upperBound],
+        outputRange: [200, 200, 64 * 2],
+        extrapolate: Extrapolate.CLAMP
+    })
+    const showControls = interpolate(translateY, {
+        inputRange: [0, midBound],
+        outputRange: [1, 0],
+        extrapolate: Extrapolate.CLAMP
+    })
+    const modalHeight = interpolate(translateY, {
+        inputRange: [0, midBound],
+        outputRange: [height, 64 * 2],
+        extrapolate: Extrapolate.CLAMP
+    })
+    const bottom = interpolate(translateY, {
+        inputRange: [0, midBound],
+        outputRange: [0, 70],
+        extrapolate: Extrapolate.CLAMP
+    })
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', handlebackPress)
 
@@ -179,18 +205,27 @@ export const VideoModal = ({ video, setVideo }) => {
     }, [])
     return (
         <>
-            <Animated.View style={[styles.container, { backgroundColor: '#fff', transform: [{ translateY: translateY }] }]}>
+            <Animated.View style={[styles.container, {
+                backgroundColor: 'red',
+                maxHeight: modalHeight,
+                overflow: 'hidden',
+                transform: [
+                    {
+                        translateY: translateY
+                    }
+                ],
+                marginBottom: bottom
+            }]}>
                 <PanGestureHandler
                     onHandlerStateChange={onGestureEvent}
                     onGestureEvent={onGestureEvent}
-                    activeOffsetY={[-700,10]}
+                    activeOffsetY={[-700, 10]}
                 >
-                    <AVideo source={video} style={styles.video} controls={true} muted={false} />
-
+                    <AVideo source={video} style={[styles.video, { width: videoWidth, height: videoHeight }]} controls={showControls ? true : false} muted={false} resizeMode='cover' />
+                    
                 </PanGestureHandler>
 
-                <Animated.View style={{ opacity }}>
-                <ScrollView>
+                <Animated.ScrollView style={{ opacity }}>
                     {
                         videos.map(({ thumb, title, video }, i) => {
                             return (
@@ -198,8 +233,7 @@ export const VideoModal = ({ video, setVideo }) => {
                             )
                         })
                     }
-                </ScrollView>
-                </Animated.View>
+                </Animated.ScrollView>
             </Animated.View>
         </>
     )

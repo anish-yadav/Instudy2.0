@@ -53,4 +53,7 @@ target 'instudy' do
 
   pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
 
+
+
+
 end

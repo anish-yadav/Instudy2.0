@@ -20,11 +20,12 @@ query loginUser($username:String!,$password:String!){
 export const BOOKS_QUERY = gql`
 {
     books{
-      name,
-      author,
-      thumb,
-      url,
-      subCode,
-      semesters
+        id,
+        name,
+        author,
+        thumb,
+        url,
+        subCode,
+        semesters
     }
 }`

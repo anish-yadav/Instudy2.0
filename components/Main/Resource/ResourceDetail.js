@@ -4,6 +4,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import { TextStyle, BookThumbWithDetail } from '../../basic'
 import Animation from 'lottie-react-native'
 import RNFetchBlob from 'rn-fetch-blob'
+import { SharedElement } from 'react-navigation-shared-element'
 
 
 const { width } = Dimensions.get('window')
@@ -17,24 +18,23 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         padding: 20,
-        position: 'absolute',
         justifyContent: 'space-between',
         width,
-        top: 0
+        backgroundColor: '#1E152A'
     },
     scrollView: {
-        marginTop: 60,
-        paddingTop: 20,
-        paddingHorizontal: 10
     },
     img: {
         height: 200,
         width: 120,
-        borderRadius: 10
+        borderRadius: 10,
+        marginTop:50
     },
     name: {
         marginTop: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        paddingHorizontal: 10,
+        textTransform:  'capitalize'
     },
     subCode: {
         backgroundColor: 'rgba(30,21,42,0.7)',
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     downloadContainer: {
-        backgroundColor: 'rgba(30,21,42,1)',
+        backgroundColor: '#1E152A',
         marginTop: 30,
         width: width - 50,
         height: 50,
@@ -62,19 +62,21 @@ const styles = StyleSheet.create({
         color: '#1E152A',
         fontFamily: 'SFProText-Regular',
         fontSize: 16,
-        marginTop: 20,
-        paddingHorizontal: 20
+        paddingTop: 20,
+        paddingHorizontal: 20,
+        backgroundColor: '#fff'
     },
     flatlist: {
         minHeight: 200,
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         paddingVertical: 20,
-        marginHorizontal: 10,
+        backgroundColor: '#FFF'
     }
 })
 const ResourceDetail = ({ route, navigation }) => {
 
-    const { thumb, name, author, subCode, data, url } = route.params
+    
+    const { thumb, name, author, subCode, data, url, id } = route.params
     const dataList = data.filter(d => d.name !== name)
 
     const startDownload = async () => {
@@ -102,16 +104,20 @@ const ResourceDetail = ({ route, navigation }) => {
         <View style={styles.container}>
             <View style={styles.header}>
                 <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-                    <Feather name='x' size={24} color='#000' />
+                    <Feather name='x' size={24} color='#fff' />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback>
-                    <Feather name='bookmark' size={24} color='#000' />
+                    <Feather name='bookmark' size={24} color='#fff' />
                 </TouchableWithoutFeedback>
             </View>
 
             <ScrollView style={styles.scrollView}>
-                <View style={{ alignItems: 'center' }}>
-                    <Image style={styles.img} source={{ uri: thumb }} />
+            <View style={{ ...StyleSheet.absoluteFillObject,backgroundColor: '#1E152A'}} />
+                <View style={{ flex: 1, alignItems: 'center' , borderTopLeftRadius: 75, borderTopRightRadius: 75, backgroundColor: '#fff'}}>
+                    
+                    <SharedElement id={`${id}`}>
+                        <Image style={styles.img} source={{ uri: thumb }} resizeMode='cover' />
+                    </SharedElement>
                     <Text style={[TextStyle.heading, styles.name]}>{name}</Text>
                     <Text style={[TextStyle.description]}>{author}</Text>
                     <Text style={styles.subCode}>{subCode}</Text>
@@ -148,5 +154,6 @@ const ResourceDetail = ({ route, navigation }) => {
         </View>
     )
 }
+
 
 export default ResourceDetail

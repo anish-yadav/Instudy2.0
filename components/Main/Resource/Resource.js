@@ -8,6 +8,8 @@ import { BOOKS_QUERY } from '../../../helpers/query'
 import Animation from 'lottie-react-native'
 import { useScrollHandler } from 'react-native-redash'
 import Animated, { interpolate } from 'react-native-reanimated'
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
+import ResourceDetail from './ResourceDetail'
 
 const { width, height } = Dimensions.get('window')
 const HEADER_HEIGHT = 70
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10
     }
 })
-const Resource = ({ route, navigation }) => {
+const Home = ({ route, navigation }) => {
 
     const { loading, error, data } = useQuery(BOOKS_QUERY)
     const [books, setBooks] = useState([])
@@ -244,4 +246,23 @@ const Popular1Container = ({ books, navigation }) => {
         </View>
     )
 }
-export default Resource
+
+const Stack = createSharedElementStackNavigator()
+
+export const ResourceStack = () => {
+    return(
+        <Stack.Navigator headerMode='none'>
+            <Stack.Screen name='Resource' component={Home}  />
+            <Stack.Screen 
+                name='Resource_Detail' 
+                component={ResourceDetail}
+                sharedElementsConfig={(route, otherRoute, showing) => {
+                    const { id } = route.params;
+                    return [{
+                        id: id,
+                        animation: 'move'
+                    }];
+                }}  />
+        </Stack.Navigator>
+    )
+}
