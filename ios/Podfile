@@ -56,4 +56,6 @@ target 'instudy' do
 
 
 
+  pod 'RNSharedElement', :path => '../node_modules/react-native-shared-element'
+
 end

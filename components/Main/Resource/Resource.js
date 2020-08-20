@@ -183,8 +183,8 @@ const Home = ({ route, navigation }) => {
                 <View style={styles.line} />
 
                 <PopularContainer books={books} navigation={navigation} />
-                <Popular1Container books={books} navigation={navigation} />
-                <Popular1Container books={books} navigation={navigation} />
+                {/* <Popular1Container books={books} navigation={navigation} />
+                <Popular1Container books={books} navigation={navigation} /> */}
             </Animated.ScrollView>
         </View>
     )
@@ -262,7 +262,8 @@ export const ResourceStack = () => {
                         id: id,
                         animation: 'move'
                     }];
-                }}  />
+                }}
+                  />
         </Stack.Navigator>
     )
 }
